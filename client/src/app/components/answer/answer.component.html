@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-12 mb-2">
+    <div class="media">
+      <img src="{{ answer.userPicture}}" class="rounded-circle mr-3" width="40px">
+      <div class="media-body bg-light p-2">
+        <small class="m-0 font-weight-bold text-dark">{{ answer.userName }}</small>
+        <small class="d-block">{{ answer.userDesignation }}</small>
+        <small class="text-muted">4 minutes • <i class="fa fa-globe"></i></small>
+        <p>{{ answer.answer }} </p>
+        <div>
+          <span><small class="text-dark mr-1" style="font-size: 15px;">{{ calculateLike(answer.like.length) }}</small></span>
+          <button class="btn" (click)="like(answer._id)"><i class="mdi mdi-thumb-up-outline mr-1" [ngClass]="searchLike(answer.like) ? 'text-primary' : 'text-dark'"></i><small
+              class="mr-2">Like</small></button>
+          <small class="text-dark mr-1" style="font-size: 15px;">{{ calculateDislike(answer.dislike.length) }}</small>
+          <button class="btn" (click)="dislike(answer._id)"><i
+              class="mdi mdi-thumb-down-outline mr-1" [ngClass]="searchDislike(answer.dislike) ? 'text-danger' : 'text-dark'"></i><small class="mr-2">Dislike</small></button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,308 @@
+<div class="container pt-5">
+  <div class="row pt-5">
+    <!-- left section -->
+    <div class="col-md-3 pt-2">
+      <!-- profile -->
+      <div class="bg-white shadow-sm mb-4 pb-3">
+        <div class="bg-warning dp-background"></div>
+        <div class="dp rounded-circle mx-auto">
+          <img src="{{ user.dp }}"
+            class="rounded-circle w-100">
+        </div>
+
+        <h5 class="text-center font-weight-bold">{{ user.name }}</h5>
+        <h6 class="text-center">{{ user.designation }}</h6>
+      </div>
+      <!-- Tags -->
+      <div class="bg-white shadow-sm p-3 mb-4">
+        <h4>Tags</h4>
+        <hr>
+        <span class="badge badge-primary p-2 m-1">ajax</span>
+        <span class="badge badge-secondary p-2 m-1">c</span>
+        <span class="badge badge-success p-2 m-1">css</span>
+        <span class="badge badge-danger p-2 m-1">express</span>
+        <span class="badge badge-warning p-2 m-1">html</span>
+        <span class="badge badge-info p-2 m-1">java</span>
+        <span class="badge badge-light p-2 m-1">javascript</span>
+        <span class="badge badge-dark p-2 m-1">nodejs</span>
+
+      </div>
+    </div>
+
+    <!-- Middle section -->
+    <div class="col-md-6 bg-light">
+      <!-- middle section container -->
+      <div class="container px-0 pt-2">
+
+        <!-- Your upload section -->
+        <div class="shadow-sm rounded bg-white">
+          <div class="container d-flex justify-content-between px-3 pt-3">
+            <div class="user-dp rounded-circle">
+              <img src="{{ user.dp }}"
+                class="rounded-circle w-100">
+            </div>
+            <div>
+              <button class="btn btn-primary rounded mx-1" data-toggle="modal" data-target="#post">Start a post</button>
+            </div>
+          </div>
+          <div class="container">
+            <hr>
+          </div>
+          <div class="container d-flex justify-content-around pb-3">
+            <button class="btn">
+              <i class="fa fa-camera text-primary mr-2"></i>Photo
+            </button>
+            <button class="btn">
+              <i class="fa fa-file-text-o text-success mr-2"></i>Document
+            </button>
+            <button class="btn">
+              <i class="mdi mdi-newspaper
+                        text-warning mr-2"></i>Write article
+            </button>
+          </div>
+        </div>
+
+        <!-- post -->
+
+        <ng-container *ngFor="let post of posts.slice().reverse(); let i = index">
+
+          <div class="shadow-sm rounded my-3 bg-white pb-3">
+            <div class="container d-flex justify-content-between p-3">
+              <div class="d-flex">
+                <div class="user-dp rounded-circle">
+                  <img src="{{ post.authorDP }}" class="rounded-circle w-100">
+                </div>
+                <div class="ml-2">
+                  <p class="m-0 font-weight-bold text-dark">{{ post.authorName }}</p>
+                  <small class="d-block">{{ post.authorDesignation }}</small>
+                  <small>{{calculateDiff(post.createdAt)}}d • <i class="fa fa-globe"></i></small>
+                </div>
+              </div>
+              <div>
+                <i class="fa fa-ellipsis-v"></i>
+              </div>
+            </div>
+            <div class="container">
+              <p>{{ post.content }}</p>
+            </div>
+            <a href="#" class="text-dark">
+              <img src="{{ post.content_picture }}" class="w-100">
+              <!-- <img src="../../../assets/posts/1603989036470email.gif" class="w-100"> -->
+            </a>
+            <div class="container">
+              <div class="d-flex justify-content-between pt-2">
+                <i class="fa fa-thumbs-up">{{ post.likes.length }} • {{ post.comments.length }} Comments</i>
+                <i class="fa fa-eye"><span class="ml-1">Views 580</span></i>
+              </div>
+              <hr>
+            </div>
+
+
+            <div class="container d-flex justify-content-around">
+
+              <!-- reaction -->
+              <div>
+                <div class="text-center reaction-container">
+                  <div class="like_container text-center">
+                    <div class="reactions bg-white shadow-sm p-1 d-flex border">
+                      <div class="rection h-100 p-0 m-0" (click)="like('like',post._id)" data-toggle="tooltip"
+                        data-placement="top" title="Like">
+                        <img
+                          src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/like.gif?raw=true"
+                          class="h-100">
+                      </div>
+                      <div class="rection h-100 p-0 m-0" (click)="like('superb',post._id)" data-toggle="tooltip"
+                        data-placement="top" title="Superb">
+                        <img
+                          src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/superb.gif?raw=true"
+                          class="h-100">
+                      </div>
+                      <div class="rection h-100 p-0 m-0" (click)="like('love',post._id)" data-toggle="tooltip"
+                        data-placement="top" title="Love">
+                        <img
+                          src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/love.gif?raw=true"
+                          class="h-100">
+                      </div>
+                      <div class="rection h-100 p-0 m-0" (click)="like('curious',post._id)" data-toggle="tooltip"
+                        data-placement="top" title="Curious">
+                        <img
+                          src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/curious.gif?raw=true"
+                          class="h-100">
+                      </div>
+                      <div class="rection h-100 p-0 m-0" (click)="like('cry',post._id)" data-toggle="tooltip"
+                        data-placement="top" title="Cry">
+                        <img
+                          src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/cry.gif?raw=true"
+                          class="h-100">
+                      </div>
+                      <div class="rection h-100 p-0 m-0" (click)="like('sad',post._id)" data-toggle="tooltip"
+                        data-placement="top" title="Sad">
+                        <img
+                          src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/sad.gif?raw=true"
+                          class="h-100">
+                      </div>
+                      <div class="rection h-100 p-0 m-0" (click)="like('angry',post._id)" data-toggle="tooltip"
+                        data-placement="top" title="Angry">
+                        <img
+                          src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/angry.gif?raw=true"
+                          class="h-100">
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn like-btn" (click)="like('nothing',post._id)" [innerHTML]="searchId(post.likes)"></button>
+                </div>
+              </div>
+
+
+              <div><a href="#{{ 'wave' + i }}" class="btn" data-toggle="collapse"><i
+                    class="mdi mdi-comment-outline mr-2"></i>Comment</a></div>
+              <div><a href="#" class="btn"><i class="mdi mdi-share mr-2"></i>Share</a></div>
+            </div>
+
+            <div class="container collapse" id="{{ 'wave' + i }}">
+              <!-- new comment section -->
+              <div class="container">
+                <hr>
+                <div class="media">
+                  <img src="{{ user.dp }}" class="rounded-circle border mr-1" width="35px">
+                  <form class="w-100" (submit)="writeComment(post._id,newcomment.value)">
+                    <div class="input-group mb-3">
+                      <input type="text" #newcomment class="form-control" placeholder="Write a comment....">
+                      <div class="input-group-append">
+                        <div class="input-group-text py-0">
+                          <button type="submit" class="btn p-0"><i class="mdi mdi-send"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div *ngFor="let comment of post.comments">
+                <hr>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="media">
+                      <img src="{{ comment.commentator_dp }}" class="rounded-circle mr-2 border" width="40px">
+                      <div class="media-body bg-light p-2">
+                        <small class="m-0 font-weight-bold text-dark">{{ comment.commentator_name }}</small>
+                        <small class="d-block">{{ comment.commentator_designation}}</small>
+                        <small class="text-muted">{{ calculateDiff(comment.comments_at) }} d • <i
+                            class="fa fa-globe"></i></small>
+                        <p class="mt-1"> {{ comment.comment }} </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+
+      </div>
+    </div>
+
+    <!-- Right section-->
+    <div class="col-md-3 pt-2">
+      <!-- right section -->
+
+      <div class="container p-0">
+
+        <!--Highest points-->
+        <div class="bg-white shadow-sm p-3 mb-4">
+          <h5>Suggestions For You</h5>
+          <hr>
+          <div class="d-flex justify-content-around border-bottom mb-3">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTEkyDjgM9w8YrLS2ura4VK2xKJgpkX1ZmuDg&usqp=CAU"
+              width="60px" height="60px" class="rounded-circle">
+            <div>
+              <h5>Ahmed Hassan</h5>
+              <button class="btn btn-sm btn-success">Follow</button>
+              <p>258 Followers</p>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-around border-bottom mb-3">
+            <img
+              src="https://www.channelnewsasia.com/image/11200638/1x1/600/600/cf130453c06ac83168366b7263704886/FM/jude-law-how-to-prevent-male-balding-cna-lifestyle-2.jpg"
+              width="60px" height="60px" class="rounded-circle">
+            <div>
+              <h5>Ahmed Hassan</h5>
+              <button class="btn btn-sm btn-success">Follow</button>
+              <p>360 Followers</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+
+
+<!-- Model of start post -->
+<div class="modal fade" id="post">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="modal-header bg-primary text-light">
+          <h5 class="modal-title" id="exampleModalLabel">Write A Post</h5>
+          <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form (submit)="startAPost()">
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="description" class="col-form-label">Description:</label>
+              <textarea class="form-control" [(ngModel)]="description" id="description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="tags" class="col-form-label">Tags:</label>
+              <tag-input [(ngModel)]="tags" name="tags" [modelAsStrings]="true" [maxItems]="6">
+              </tag-input>
+            </div>
+            <div class="form-group">
+              <fieldset class="form-group">
+
+                <label>Add to your post</label>
+                {{imageError}}
+                <button class="btn btn-sm btn-warning float-right" (click)="removeImage()"
+                  *ngIf="isImageSaved">Remove</button>
+                <div class="custom-file fileInputProfileWrap">
+                  <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
+                  <div class="img-space">
+
+                    <ng-container *ngIf="isImageSaved; else elseTemplate">
+                      <img [src]="cardImageBase64" />
+                    </ng-container>
+                    <ng-template #elseTemplate>
+
+                      <img src="https://demos.creative-tim.com/vue-black-dashboard-pro/img/image_placeholder.jpg"
+                        class="img-responsive">
+                    </ng-template>
+
+                  </div>
+
+                </div>
+              </fieldset>
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary px-3">Post</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

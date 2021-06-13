@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+  <a class="navbar-brand font-nice" href="#"><span class="m-0">
+      <h3 class="ml-4">DevForDevs</h3>
+    </span></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto mr-2">
+      <li *ngIf="isLogin()" class="nav-item mr-3" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a href="#" routerLink="/" class="nav-link font-15">Home</a>
+      </li>
+      <li *ngIf="isLogin()" class="nav-item mr-3" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a href="#" routerLink="/QueAns" class="nav-link font-15">Question/Anwser</a>
+      </li>
+      <li *ngIf="isLogin()" class="nav-item mr-3" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a href="#" routerLink="/developers" class="nav-link font-15">Our Developers</a>
+      </li>
+      <li *ngIf="!isLogin()" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a  routerLink="/login" class="btn btn-primary mx-1 rounded">Login</a>
+      </li>
+      <li *ngIf="!isLogin()" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a routerLink="/register" class="btn btn-warning mx-1 rounded">Sign up</a>
+      </li>
+      <li class="mt-2 mr-2 text-dark" *ngIf="isLogin()">
+        <h6 class="font-15 p-0 m-0">{{ user.name }}</h6>
+      </li>
+      <li class="nav-item dropdown mr-2" *ngIf="isLogin()">
+        <div class="d-flex">
+          <div class="profile rounded-circle cursor-pointer border" data-toggle="dropdown"><img
+              src="{{ user.dp }}"
+              width="40px" class="rounded-circle"></div>
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="/profile/ownPost">View profile</a>
+            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" href="/login" (click)="onLogoutClick()" style="cursor: pointer;">Logout</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- Signup model -->

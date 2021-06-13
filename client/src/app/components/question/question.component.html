@@ -1,0 +1,89 @@
+<ng-container *ngFor="let question of questions.slice().reverse(); let i = index">
+
+    <div class="container mt-2 mb-4 pt-2 bg-white shadow-sm rounded-lg">
+      <div class="d-flex">
+        <div style="width: 50px;height:50px" class="rounded-circle">
+          <img src="{{ question.authorPicture }}" class="rounded-circle w-100">
+        </div>
+        <div class="ml-2">
+          <p class="m-0 font-weight-bold text-dark">{{ question.authorName }}</p>
+          <small class="d-block">{{ question.authorDesignation }}</small>
+          <small class="text-muted">{{calculateDiff(question.createdAt)}}d • <i class="fa fa-globe"></i></small>
+        </div>
+        <div class="d-flex ml-auto">
+          <div class="text-center mr-2">
+            <small class="font-weight-bold mr-1">{{ question.answers.length }}</small><small>Answers</small>
+          </div>
+          <div class="text-center mr-2">
+            <small class="font-weight-bold mr-1">12</small><small>Views</small>
+          </div>
+          <div class="text-center">
+            <small class="font-weight-bold mr-1">3</small><small>Favourties</small>
+          </div>
+        </div>
+      </div>
+      <div class="container mt-2 p-0">
+        <h3 class="font-weight-bold">{{ question.question }}</h3>
+        <p class="text-muted">{{ question.description }}</p>
+      </div>
+      <div class="container d-flex justify-content-between p-0">
+        <div class="p-0">
+          <span class="badge badge-primary p-1 mx-1">{{ question.tags[0] }}</span>
+          <span class="badge badge-danger p-1 mx-1">{{ question.tags[1] }}</span>
+          <span class="badge badge-success p-1 mx-1">{{ question.tags[2] }}</span>
+          <span class="badge badge-dark p-1 mx-1">{{ question.tags[3] }}</span>
+          <span class="badge badge-info p-1 mx-1">{{ question.tags[4] }}</span>
+          <span class="badge badge-secondary p-1 mx-1">{{ question.tags[5] }}</span>
+        </div>
+        <div>
+          <a href="#{{ 'wave' + i }}" data-toggle="collapse" class="btn btn-danger rounded-sm">View Answer</a>
+        </div>
+      </div>
+      <div class="container pb-2">
+        <hr>
+        <div class="media">
+        <img src="{{ user.dp }}" class="rounded-circle border mr-1" width="35px">
+        <form (submit)="sendAnswer(question._id,newAnswer.value)" class="w-100">
+          <div class="input-group mb-3">
+            <input type="text" #newAnswer class="form-control" placeholder="Post your answer">
+            <div class="input-group-append">
+              <div class="input-group-text py-0">
+                <button type="submit" class="btn p-0"><i class="mdi mdi-send"></i></button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      </div>
+      <div class="container collapse" id="{{ 'wave' + i }}">
+        <div *ngFor="let answer of question.answers">
+          <!-- Answers part -->
+          <hr>
+          <div class="row">
+            <div class="col-12 mb-2">
+              <div class="media">
+                <img src="{{ answer.userPicture}}" class="rounded-circle mr-3" width="40px">
+                <div class="media-body bg-light p-2">
+                  <small class="m-0 font-weight-bold text-dark">{{ answer.userName }}</small>
+                  <small class="d-block">{{ answer.userDesignation }}</small>
+                  <small class="text-muted">4 minutes • <i class="fa fa-globe"></i></small>
+                  <p>{{ answer.answer }} </p>
+                  <div>
+                    <span><small class="text-dark mr-1" style="font-size: 15px;">{{ calculateLike(answer.like.length) }}</small></span>
+                    <button class="btn" (click)="like(answer._id)"><i class="mdi mdi-thumb-up-outline mr-1" [ngClass]="searchLike(answer.like) ? 'text-primary' : 'text-dark'"></i><small
+                        class="mr-2">Like</small></button>
+                    <small class="text-dark mr-1" style="font-size: 15px;">{{ calculateDislike(answer.dislike.length) }}</small>
+                    <button class="btn" (click)="dislike(answer._id)"><i
+                        class="mdi mdi-thumb-down-outline mr-1" [ngClass]="searchDislike(answer.dislike) ? 'text-danger' : 'text-dark'"></i><small class="mr-2">Dislike</small></button>
+          
+                  </div>
+          
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </ng-container>

@@ -1,0 +1,145 @@
+<div class="container pt-5">
+  <div class="row pt-5">
+    <!-- left section -->
+    <div class="col-md-3 pt-2">
+      <!-- profile -->
+      <div class="bg-white shadow-sm mb-4 pb-3">
+        <div class="bg-warning dp-background"></div>
+        <div class="dp rounded-circle mx-auto">
+          <img src="{{ user.dp }}"
+            class="rounded-circle w-100">
+        </div>
+
+        <h5 class="text-center font-weight-bold">{{ user.name }}</h5>
+        <h6 class="text-center">{{ user.designation }}</h6>
+      </div>
+      <!-- Tags -->
+      <div class="bg-white shadow-sm p-3 mb-4">
+        <h4>Tags</h4>
+        <hr>
+        <span class="badge badge-primary p-2 m-1">ajax</span>
+        <span class="badge badge-secondary p-2 m-1">c</span>
+        <span class="badge badge-success p-2 m-1">css</span>
+        <span class="badge badge-danger p-2 m-1">express</span>
+        <span class="badge badge-warning p-2 m-1">html</span>
+        <span class="badge badge-info p-2 m-1">java</span>
+        <span class="badge badge-light p-2 m-1">javascript</span>
+        <span class="badge badge-dark p-2 m-1">nodejs</span>
+
+      </div>
+    </div>
+
+    <div class="col-md-9 pt-2">
+      <div class="container pt-2">
+        <div class="row">
+          <ng-container *ngFor="let developer of developers; let i = index">
+
+            <div class="col-md-4" *ngIf="checkDeveloper(developer._id)">
+              <div class="card bg-white shadow-sm rounded mb-3 border-0">
+                <div class="card-body p-0 text-center">
+                  <div class="bg-primary" style="height: 100px;"></div>
+                  <div style="width: 80px;height:80px; position:relative;top:-40px;" class="rounded-circle mx-auto">
+                    <img src="{{ developer.dp }}"
+                      class="rounded-circle w-100">
+                  </div>
+                  <a [routerLink]="['/developer-profile',developer._id,'developer-posts']" class="text-dark"><h5 class="text-center font-weight-bold">{{ developer.name }}</h5>
+                  <h6 class="text-center">{{ developer.designation }}</h6></a>
+  
+                  <div class="d-flex justify-content-center">
+                    <a href="{{ developer.githubLink }}" class="btn btn-dark btn-icon ml-1"><i class="fa fa-github"></i></a>
+                    <a href="{{ developer.linkedinLink }}" class="btn btn-primary btn-icon ml-1"><i class="fa fa-linkedin"></i></a>
+                    <a href="{{ developer.instagramLink }}" class="btn btn-danger btn-icon ml-1"><i class="fa fa-instagram"></i></a>
+                  </div>
+  
+                  <button type="button" class="btn rounded btn-outline-warning mt-2 mb-3" (click)="follow($event,developer._id)" id="{{ 'wave' + i }}">Follow</button>
+  
+                </div>
+  
+              </div>
+            </div>
+
+
+          </ng-container>
+
+
+
+          
+          <!-- <div class="col-md-4">
+            <div class="card bg-white shadow-sm rounded mb-3 border-0">
+              <div class="card-body p-0 text-center">
+                <div class="bg-primary" style="height: 100px;"></div>
+                <div style="width: 80px;height:80px; position:relative;top:-40px;" class="rounded-circle mx-auto">
+                  <img src="https://a10.gaanacdn.com/images/artists/29/1412129/crop_175x175_1412129.jpg"
+                    class="rounded-circle w-100">
+                </div>
+                <h5 class="text-center font-weight-bold">Kajal Aggarwal</h5>
+                <h6 class="text-center">Web Developer</h6>
+
+                <div class="d-flex justify-content-center">
+                  <a href="#" class="btn btn-dark btn-icon ml-1"><i class="fa fa-github"></i></a>
+                  <a href="#" class="btn btn-primary btn-icon ml-1"><i class="fa fa-linkedin"></i></a>
+                  <a href="#" class="btn btn-danger btn-icon ml-1"><i class="fa fa-google"></i></a>
+                </div>
+
+                <button type="button" class="btn rounded btn-outline-warning mt-2 mb-3" (click)="follow($event,1)" id="{{ 'wave' + 1 }}">Follow</button>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-white shadow-sm rounded border-0 mb-3">
+              <div class="card-body p-0 text-center">
+                <div class="bg-primary" style="height: 100px;"></div>
+                <div style="width: 80px;height:80px; position:relative;top:-40px;" class="rounded-circle mx-auto">
+                  <img
+                    src="https://avatars3.githubusercontent.com/u/43919764?s=400&u=10d9315e077ebc432e3190ab71259bdc8dcab47e&v=4"
+                    class="rounded-circle w-100">
+                </div>
+                <h5 class="text-center font-weight-bold">Nidhi Goyal</h5>
+                <h6 class="text-center">Web Developer</h6>
+
+                <div class="d-flex justify-content-center">
+                  <a href="#" class="btn btn-dark btn-icon ml-1"><i class="fa fa-github"></i></a>
+                  <a href="#" class="btn btn-primary btn-icon ml-1"><i class="fa fa-linkedin"></i></a>
+                  <a href="#" class="btn btn-danger btn-icon ml-1"><i class="fa fa-google"></i></a>
+                </div>
+
+                <button type="button" class="btn rounded btn-outline-warning mt-2 mb-3" (click)="follow($event,2)" id="{{ 'wave' + 2 }}">Follow</button>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-white shadow-sm rounded mb-3 border-0">
+              <div class="card-body p-0 text-center">
+                <div class="bg-primary" style="height: 100px;"></div>
+                <div style="width: 80px;height:80px; position:relative;top:-40px;" class="rounded-circle mx-auto">
+                  <img
+                    src="https://avatars1.githubusercontent.com/u/55660986?s=460&u=da81758f62d7dfc4b726a6d056d388178496d095&v=4"
+                    class="rounded-circle w-100">
+                </div>
+                <h5 class="text-center font-weight-bold">Sourav Santra</h5>
+                <h6 class="text-center">Web Developer</h6>
+
+                <div class="d-flex justify-content-center">
+                  <a href="#" class="btn btn-dark btn-icon ml-1"><i class="fa fa-github"></i></a>
+                  <a href="#" class="btn btn-primary btn-icon ml-1"><i class="fa fa-linkedin"></i></a>
+                  <a href="#" class="btn btn-danger btn-icon ml-1"><i class="fa fa-google"></i></a>
+                </div>
+
+                <button type="button" class="btn rounded btn-outline-warning mt-2 mb-3" (click)="follow($event,3)" id="{{ 'wave' + 3 }}">Follow</button>
+
+              </div>
+
+            </div>
+          </div> -->
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

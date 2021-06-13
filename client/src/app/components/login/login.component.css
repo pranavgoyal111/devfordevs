@@ -1,0 +1,11 @@
+/* rightnavbar input */
+input[type='text'],[type='password'],[type='email'],[type='number'],[type='search']::placeholder{
+    font-family: fontAwesome;
+    font-size: 16px;
+    color: gray;
+   }
+   input,
+   input::-webkit-input-placeholder {
+       font-size: 16px;
+       line-height: 3;
+   }

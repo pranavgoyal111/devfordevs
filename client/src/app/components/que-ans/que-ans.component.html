@@ -1,0 +1,304 @@
+<div class="container pt-5">
+
+  <div class="row pt-5">
+    <!-- left section -->
+    <div class="col-md-3 pt-2">
+      <!-- profile -->
+      <div class="bg-white shadow-sm mb-4 pb-3">
+        <div class="bg-warning dp-background"></div>
+        <div class="dp rounded-circle mx-auto">
+          <img src="{{ user.dp }}"
+            class="rounded-circle w-100">
+        </div>
+
+        <h5 class="text-center font-weight-bold">{{ user.name }}</h5>
+        <h6 class="text-center">{{ user.designation }}</h6>
+      </div>
+      <!-- Tags -->
+      <div class="bg-white shadow-sm p-3 mb-4">
+        <h4>Tags</h4>
+        <hr>
+        <span class="badge badge-primary p-2 m-1">ajax</span>
+        <span class="badge badge-secondary p-2 m-1">c</span>
+        <span class="badge badge-success p-2 m-1">css</span>
+        <span class="badge badge-danger p-2 m-1">express</span>
+        <span class="badge badge-warning p-2 m-1">html</span>
+        <span class="badge badge-info p-2 m-1">java</span>
+        <span class="badge badge-light p-2 m-1">javascript</span>
+        <span class="badge badge-dark p-2 m-1">nodejs</span>
+
+      </div>
+    </div>
+
+    <!-- Middle section -->
+    <div class="col-md-6 bg-light">
+      <!-- middle section container -->
+      <!-- <div *ngFor="let question of questions">
+      {{ question._id }}
+
+    </div> -->
+    
+      <ng-container *ngFor="let question of questions.slice().reverse(); let i = index">
+
+        <div class="container mt-2 mb-4 pt-2 bg-white shadow-sm rounded-lg">
+          <div class="d-flex">
+            <div style="width: 50px;height:50px" class="rounded-circle">
+              <img src="{{ question.authorPicture }}" class="rounded-circle w-100">
+            </div>
+            <div class="ml-2">
+              <p class="m-0 font-weight-bold text-dark">{{ question.authorName }}</p>
+              <small class="d-block">{{ question.authorDesignation }}</small>
+              <small class="text-muted">{{calculateDiff(question.createdAt)}}d • <i class="fa fa-globe"></i></small>
+            </div>
+            <div class="d-flex ml-auto">
+              <div class="text-center mr-2">
+                <small class="font-weight-bold mr-1">{{ question.answers.length }}</small><small>Answers</small>
+              </div>
+              <div class="text-center mr-2">
+                <small class="font-weight-bold mr-1">12</small><small>Views</small>
+              </div>
+              <div class="text-center">
+                <small class="font-weight-bold mr-1">3</small><small>Favourties</small>
+              </div>
+            </div>
+          </div>
+          <div class="container mt-2 p-0">
+            <h3 class="font-weight-bold">{{ question.question }}</h3>
+            <p class="text-muted">{{ question.description }}</p>
+          </div>
+          <div class="container d-flex justify-content-between p-0">
+            <div class="p-0">
+              <span class="badge badge-primary p-1 mx-1">{{ question.tags[0] }}</span>
+              <span class="badge badge-danger p-1 mx-1">{{ question.tags[1] }}</span>
+              <span class="badge badge-success p-1 mx-1">{{ question.tags[2] }}</span>
+              <span class="badge badge-dark p-1 mx-1">{{ question.tags[3] }}</span>
+              <span class="badge badge-info p-1 mx-1">{{ question.tags[4] }}</span>
+              <span class="badge badge-secondary p-1 mx-1">{{ question.tags[5] }}</span>
+            </div>
+            <div>
+              <a href="#{{ 'wave' + i }}" data-toggle="collapse" class="btn btn-danger rounded-sm">View Answer</a>
+            </div>
+          </div>
+          <div class="container pb-2">
+            <hr>
+            <div class="media">
+            <img src="{{ user.dp }}" class="rounded-circle border mr-1" width="35px">
+            <form (submit)="sendAnswer(question._id,newAnswer.value)" class="w-100">
+              <div class="input-group mb-3">
+                <input type="text" #newAnswer class="form-control" placeholder="Post your answer">
+                <div class="input-group-append">
+                  <div class="input-group-text py-0">
+                    <button type="submit" class="btn p-0"><i class="mdi mdi-send"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          </div>
+          <div class="container collapse" id="{{ 'wave' + i }}">
+            <div *ngFor="let answer of question.answers">
+              <!-- Answers part -->
+              {{setInParent(reactionUpdate)}}
+              <hr>
+              <app-answer (newUpdateData)="reactionUpdate=$event" [answer]="answer"></app-answer>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+
+    <!-- Right section-->
+    <div class="col-md-3 pt-2">
+      <!-- right section -->
+
+      <div class="container p-0">
+        <button class="btn btn-primary btn-block rounded-0 mb-4" data-toggle="modal" data-target="#askquestion">Ask A
+          Question</button>
+
+
+        <!-- Ask question Modal-->
+        <div class="modal fade" id="askquestion">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body p-0">
+                <div class="modal-header bg-warning text-light">
+                  <h5 class="modal-title" id="exampleModalLabel">Ask A Question</h5>
+                  <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form (submit)="askQuestion()">
+                  <div class="modal-body">
+
+                    <div class="form-group">
+                      <label for="question" class="col-form-label">Question:</label>
+                      <input type="text" [(ngModel)]="question" class="form-control" id="question" name="question">
+                    </div>
+                    <div class="form-group">
+                      <label for="description" class="col-form-label">Description:</label>
+                      <textarea class="form-control" [(ngModel)]="description" id="description"
+                        name="description"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="tags" class="col-form-label">Tags:</label>
+                      <tag-input [(ngModel)]="tags" name="tags" (keyup.enter)="onEnter($event)" [modelAsStrings]="true"
+                        [maxItems]="6">
+                      </tag-input>
+                    </div>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Post Question</button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+        <!--login form-->
+        <!-- <div class="bg-white shadow-sm p-3 mb-4">
+        <h4>Login</h4>
+        <hr>
+        <input type="text" name="username" placeholder="&#xf2bd; Username" class="form-control mb-3">
+        <input type="password" name="password" placeholder="&#xf023; Password" class="form-control mb-4">
+        <button class="btn btn-warning btn-block mb-3 rounded-0">Log in</button>
+        <div class="d-flex justify-content-between flex-wrap">
+          <div>
+            <input type="checkbox" checked class="mr-1"><span>Remember Me</span>
+          </div>
+          <div>
+            <a href="#signupForm" class="text-dark register" data-toggle="modal">Register</a>
+          </div>
+        </div>
+
+      </div> -->
+
+        <!-- Signup modal -->
+        <div class="modal fade" id="signupForm">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <h4>Register Now</h4>
+                <i class="fa fa-times-circle text-danger"
+                  style="position: absolute;top:8px;right:8px;font-size:25px; z-index: 1000;cursor: pointer;"
+                  data-dismiss="modal"></i>
+                <hr>
+                <input type="text" name="username" placeholder="&#xf2bd; Username" class="form-control mb-3">
+                <input type="email" name="email" placeholder="&#xf0e0; Email" class="form-control mb-3">
+                <input type="password" name="password" placeholder="&#xf023; Password" class="form-control mb-4">
+                <button class="btn btn-primary btn-block mb-3 rounded-0">Register</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Stats-->
+        <div class="container bg-white shadow-sm mb-4">
+          <div class="row">
+            <div class="col-6 border py-2 px-0">
+              <div style="border-left:3px solid #2D6FF7;"
+                class="d-flex flex-column justify-content-center align-items-center">
+                <p class="text-primary">Questions</p>
+                <h4>21</h4>
+              </div>
+            </div>
+            <div class="col-6 border py-2 px-0">
+              <div style="border-right:3px solid #2D6FF7;"
+                class="d-flex flex-column justify-content-center align-items-center">
+                <p class="text-danger">Answers</p>
+                <h4>21</h4>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 border py-2 px-0">
+              <div style="border-left:3px solid #2D6FF7;"
+                class="d-flex flex-column justify-content-center align-items-center">
+                <p class="text-success">Best Answers</p>
+                <h4>21</h4>
+              </div>
+            </div>
+            <div class="col-6 border py-2 px-0">
+              <div style="border-right:3px solid #2D6FF7;"
+                class="d-flex flex-column justify-content-center align-items-center">
+                <p class="text-info">Users</p>
+                <h4>21</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Highest points-->
+        <div class="bg-white shadow-sm p-3 mb-4">
+          <h4>Highest points</h4>
+          <hr>
+          <div class="d-flex justify-content-around border-bottom mb-3">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTEkyDjgM9w8YrLS2ura4VK2xKJgpkX1ZmuDg&usqp=CAU"
+              width="60px" height="60px" class="rounded-circle">
+            <div>
+              <h5>Ahmed Hassan</h5>
+              <span class="badge badge-success p-2 my-1">Teacher</span>
+              <p>258 Points</p>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-around border-bottom mb-3">
+            <img
+              src="https://www.channelnewsasia.com/image/11200638/1x1/600/600/cf130453c06ac83168366b7263704886/FM/jude-law-how-to-prevent-male-balding-cna-lifestyle-2.jpg"
+              width="60px" height="60px" class="rounded-circle">
+            <div>
+              <h5>Ahmed Hassan</h5>
+              <span class="badge badge-success p-2 my-1">Teacher</span>
+              <p>258 Points</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent question answer -->
+        <div class="bg-white shadow-sm p-3 mb-4">
+          <h4>Recent Questions</h4>
+          <hr>
+
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#questions">Questions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#answers">Answers</a>
+            </li>
+          </ul>
+          <div id="myTabContent" class="tab-content pt-3">
+            <div class="tab-pane fade show active" id="questions">
+              <div>
+                <h5 class="mb-3">Do I need to have</h5>
+                <h6 class="text-secondary">Participate in the referendum, Please.</h6>
+                <p class="text-secondary">November 19, 2017</p>
+                <hr>
+              </div>
+
+            </div>
+            <div class="tab-pane fade" id="answers">
+              <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation
+                +1
+                labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft
+                beer twee.
+                Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
+                PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

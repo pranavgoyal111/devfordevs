@@ -1,0 +1,134 @@
+<ng-container *ngFor="let post of posts.slice().reverse(); let i = index">
+
+    <div class="shadow-sm rounded mb-3 bg-white pb-3">
+      <div class="container d-flex justify-content-between p-3">
+        <div class="d-flex">
+          <div class="user-dp rounded-circle">
+            <img src="{{ post.authorDP }}" class="rounded-circle w-100">
+          </div>
+          <div class="ml-2">
+            <p class="m-0 font-weight-bold text-dark">{{ post.authorName }}</p>
+            <small class="d-block">{{ post.authorDesignation }}</small>
+            <small>{{calculateDiff(post.createdAt)}}d • <i class="fa fa-globe"></i></small>
+          </div>
+        </div>
+        <div>
+          <i class="fa fa-ellipsis-v"></i>
+        </div>
+      </div>
+      <div class="container">
+        <p>{{ post.content }}</p>
+      </div>
+      <a href="#" class="text-dark">
+        <img src="{{ post.content_picture }}" class="w-100">
+        <!-- <img src="../../../assets/posts/1603989036470email.gif" class="w-100"> -->
+      </a>
+      <div class="container">
+        <div class="d-flex justify-content-between pt-2">
+          <i class="fa fa-thumbs-up">{{ post.likes.length }} • {{ post.comments.length }} Comments</i>
+          <i class="fa fa-eye"><span class="ml-1">Views 580</span></i>
+        </div>
+        <hr>
+      </div>
+
+
+      <div class="container d-flex justify-content-around">
+
+        <!-- reaction -->
+        <div>
+          <div class="text-center reaction-container">
+            <div class="like_container text-center">
+              <div class="reactions bg-white shadow-sm p-1 d-flex border">
+                <div class="rection h-100 p-0 m-0" (click)="like('like',post._id)" data-toggle="tooltip"
+                  data-placement="top" title="Like">
+                  <img
+                    src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/like.gif?raw=true"
+                    class="h-100">
+                </div>
+                <div class="rection h-100 p-0 m-0" (click)="like('superb',post._id)" data-toggle="tooltip"
+                  data-placement="top" title="Superb">
+                  <img
+                    src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/superb.gif?raw=true"
+                    class="h-100">
+                </div>
+                <div class="rection h-100 p-0 m-0" (click)="like('love',post._id)" data-toggle="tooltip"
+                  data-placement="top" title="Love">
+                  <img
+                    src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/love.gif?raw=true"
+                    class="h-100">
+                </div>
+                <div class="rection h-100 p-0 m-0" (click)="like('curious',post._id)" data-toggle="tooltip"
+                  data-placement="top" title="Curious">
+                  <img
+                    src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/curious.gif?raw=true"
+                    class="h-100">
+                </div>
+                <div class="rection h-100 p-0 m-0" (click)="like('cry',post._id)" data-toggle="tooltip"
+                  data-placement="top" title="Cry">
+                  <img
+                    src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/cry.gif?raw=true"
+                    class="h-100">
+                </div>
+                <div class="rection h-100 p-0 m-0" (click)="like('sad',post._id)" data-toggle="tooltip"
+                  data-placement="top" title="Sad">
+                  <img
+                    src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/sad.gif?raw=true"
+                    class="h-100">
+                </div>
+                <div class="rection h-100 p-0 m-0" (click)="like('angry',post._id)" data-toggle="tooltip"
+                  data-placement="top" title="Angry">
+                  <img
+                    src="https://github.com/Sourav59580/facebook_reaction/blob/main/devfordevs%20rection/angry.gif?raw=true"
+                    class="h-100">
+                </div>
+              </div>
+            </div>
+            <button class="btn like-btn" (click)="like('nothing',post._id)" [innerHTML]="searchId(post.likes)"></button>
+          </div>
+        </div>
+
+
+        <div><a href="#{{ 'wave' + i }}" class="btn" data-toggle="collapse"><i
+              class="mdi mdi-comment-outline mr-2"></i>Comment</a></div>
+        <div><a href="#" class="btn"><i class="mdi mdi-share mr-2"></i>Share</a></div>
+      </div>
+
+      <div class="container collapse" id="{{ 'wave' + i }}">
+        <!-- new comment section -->
+        <div class="container">
+          <hr>
+          <div class="media">
+            <img src="{{ user.dp }}" class="rounded-circle border mr-1" width="35px">
+            <form class="w-100" (submit)="writeComment(post._id,newcomment.value)">
+              <div class="input-group mb-3">
+                <input type="text" #newcomment class="form-control" placeholder="Write a comment....">
+                <div class="input-group-append">
+                  <div class="input-group-text py-0">
+                    <button type="submit" class="btn p-0"><i class="mdi mdi-send"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div *ngFor="let comment of post.comments">
+          <hr>
+          <div class="row">
+            <div class="col-12">
+              <div class="media">
+                <img src="{{ comment.commentator_dp }}" class="rounded-circle mr-2 border" width="40px">
+                <div class="media-body bg-light p-2">
+                  <small class="m-0 font-weight-bold text-dark">{{ comment.commentator_name }}</small>
+                  <small class="d-block">{{ comment.commentator_designation}}</small>
+                  <small class="text-muted">{{ calculateDiff(comment.comments_at) }} d • <i
+                      class="fa fa-globe"></i></small>
+                  <p class="mt-1"> {{ comment.comment }} </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
